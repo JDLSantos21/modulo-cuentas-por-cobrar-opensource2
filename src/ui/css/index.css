@@ -217,6 +217,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .moves-table{
   margin:0;
+  max-height:85%;
 }
 
 .factura-table{
@@ -226,6 +227,7 @@ input[type=number]::-webkit-outer-spin-button {
   transform: translateX(-2000px);
   transition: 0.3s ease-in-out;
   margin:0;
+  height:85%;
 }
 
 .active{
@@ -240,3 +242,6 @@ input[type=number]::-webkit-outer-spin-button {
   font-weight:300;
 }
 
+.factura-table td{
+  height:40px;
+}

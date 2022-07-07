@@ -159,11 +159,11 @@ ipc.on("dataFacturas",(e,dataFacturas)=>{
     
     dataTable += `
     <tr class="tr">
-      <td>${factura.id_factura}</td>
-      <td>${fecha_factura.format("dddd Do MMMM YYYY")}</td>
-      <td>${(factura.nombre).toUpperCase()}</td>
-      <td>${factura.montoFactura}</td>
-      <td>${factura.balanceFactura}</td>
+      <td class='td'>${factura.id_factura}</td>
+      <td class='td'>${fecha_factura.format("dddd Do MMMM YYYY")}</td>
+      <td class='td'>${(factura.nombre).toUpperCase()}</td>
+      <td class='td'>${factura.montoFactura}</td>
+      <td class='td'>${factura.balanceFactura}</td>
     </tr>
     `
   });
