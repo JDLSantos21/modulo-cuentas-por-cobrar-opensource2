@@ -80,29 +80,41 @@ ipc = ipcRenderer
   const newMoveObj = {
     factura_aplica:parseInt(inputFacturaAplica.value),
     tipo_documento:parseInt(selectDocType.value),
-    monto_documentado:parseInt(inputMonto.value),
+    monto_documentado:inputMonto.value,
     fecha_documento:inputFecha.value,
     codigo_empleado:parseInt(selectEmpleados.value)
   }
 
 
 
-  if(selectDocType.value != "selected" && inputMonto.value != "" && newMoveObj.fecha_documento != "" && selectEmpleados.value != "selected"){
-    ipc.invoke("addNewMove",newMoveObj);
+  if(selectDocType.value != "selected" && inputMonto.value != "" && newMoveObj.fecha_documento != "" && selectEmpleados.value != "selected" && newMoveObj.factura_aplica != ""){
 
-    selectDocType.value = "selected"
-    inputFecha.value = ""
-    inputMonto.value = ""
-    selectEmpleados.value = "selected"
-    inputFacturaAplica.value = ""
+    if(allFacIDs.includes(newMoveObj.factura_aplica)){
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Satisfactorio',
-      text: 'Se ha registrado el movimiento',
-    })
+      ipc.invoke("addNewMove",newMoveObj);
 
-    ipc.send('consultaMovimientos')
+      selectDocType.value = "selected"
+      inputFecha.value = ""
+      inputMonto.value = ""
+      selectEmpleados.value = "selected"
+      inputFacturaAplica.value = ""
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Satisfactorio',
+        text: 'Se ha registrado el movimiento',
+      })
+
+      ipc.send('consultaMovimientos')
+      ipc.send('consultaFacturas')
+
+    }else{
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Ups!',
+        text: 'Esta factura no existe, introduce una existente.',
+      })
+    }
     
   }else{
     Swal.fire({
@@ -110,7 +122,6 @@ ipc = ipcRenderer
       title: 'Hubo un problema',
       text: 'Tienes que completar todos los datos correctamente.',
     })
-
   }
 
  })
@@ -135,7 +146,7 @@ ipc.on("dataMovimientos",(e,dataMovimientos)=>{
       <td>${(movimiento.des_larga).toUpperCase()}</td>
       <td>${fecha_documento.format("dddd Do MMMM YYYY")}</td>
       <td>${movimiento.factura_aplica}</td>
-      <td>${movimiento.monto_documentado}</td>
+      <td>RD$${(movimiento.monto_documentado).toLocaleString()}</td>
       <td>${(movimiento.nombre).toUpperCase()}</td>
     </tr>
     `
@@ -147,13 +158,17 @@ ipc.on("dataMovimientos",(e,dataMovimientos)=>{
 
 //  MOSTRAR LOS FACTURAS EN LA TABLA
 
+
 const facTable = document.getElementById("facTable")
+let allFacIDs = []
 
 ipc.on("dataFacturas",(e,dataFacturas)=>{
 
   let dataTable = ""
   
   dataFacturas.forEach(factura => {
+
+    allFacIDs.push(factura.id_factura)
     
     let fecha_factura = moment(factura.fecha)
     
@@ -162,13 +177,14 @@ ipc.on("dataFacturas",(e,dataFacturas)=>{
       <td class='td'>${factura.id_factura}</td>
       <td class='td'>${fecha_factura.format("dddd Do MMMM YYYY")}</td>
       <td class='td'>${(factura.nombre).toUpperCase()}</td>
-      <td class='td'>${factura.montoFactura}</td>
-      <td class='td'>${factura.balanceFactura}</td>
+      <td class='td'>RD$${(factura.montoFactura).toLocaleString()}</td>
+      <td class='td'>RD$${(factura.balanceFactura).toLocaleString()}</td>
     </tr>
     `
   });
 
   facTable.innerHTML = dataTable;
+  console.log(allFacIDs)
 
 })
 

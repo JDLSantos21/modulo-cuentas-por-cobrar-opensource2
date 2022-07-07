@@ -1,16 +1,23 @@
 {
   "name": "contabilidad---open-source-2",
   "version": "1.2.0",
-  "description": "",
+  "description": "Programa creado para la clase Desarrollo con Tecnologia Open Source II de la Universidad APEC.",
   "main": "src/index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package-win": "electron-packager . moduloCxC-openSourceII --overwrite --asar=true --platform=win32 --arch=x64 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"ModuloCxC Open Source II\""
   },
   "keywords": [],
   "author": "Jose A. De Los Santos",
+  "build": {
+    "win": {
+      "icon": "images/icon.ico"
+    }
+  },
   "license": "ISC",
   "dependencies": {
     "electron": "^19.0.7",
+    "electron-packager": "^15.5.1",
     "electron-reload": "^2.0.0-alpha.1",
     "moment": "^2.29.4",
     "momentjs": "^2.0.0",

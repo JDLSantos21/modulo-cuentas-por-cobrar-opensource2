@@ -2,6 +2,7 @@
 
 body{
   font-family: 'Poppins', sans-serif;
+  user-select: none;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
@@ -227,7 +228,7 @@ input[type=number]::-webkit-outer-spin-button {
   transform: translateX(-2000px);
   transition: 0.3s ease-in-out;
   margin:0;
-  height:85%;
+  height:90%;
 }
 
 .active{

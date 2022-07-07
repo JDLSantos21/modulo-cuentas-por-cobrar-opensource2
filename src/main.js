@@ -55,6 +55,8 @@ ipc.handle("addNewClient",async(e,clientData)=>{
 
   conn.query("INSERT INTO clientes SET ?", clientData)
 
+  
+
 })
 
 ipc.handle("addNewEmployee",async(e,employeeData)=>{
